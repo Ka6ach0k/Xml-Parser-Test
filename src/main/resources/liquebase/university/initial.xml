@@ -1,0 +1,172 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="insert-data-to-groups" author="Ivan">
+        <insert tableName="groups">
+            <column name="group_id" valueNumeric="1"/>
+            <column name="group_name" value="22VG1"/>
+        </insert>
+        <insert tableName="groups">
+            <column name="group_id" valueNumeric="2"/>
+            <column name="group_name" value="21VFV3"/>
+        </insert>
+        <insert tableName="groups">
+            <column name="group_id" valueNumeric="3"/>
+            <column name="group_name" value="24PI1"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="groups">
+                <where>group_id IN (1, 2, 3)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert-data-to-disciplines" author="Ivan">
+        <insert tableName="disciplines">
+            <column name="discipline_id" valueNumeric="1"/>
+            <column name="discipline_name" value="Analytical geometry and linear algebra"/>
+        </insert>
+        <insert tableName="disciplines">
+            <column name="discipline_id" valueNumeric="2"/>
+            <column name="discipline_name" value="Computer architecture"/>
+        </insert>
+        <insert tableName="disciplines">
+            <column name="discipline_id" valueNumeric="3"/>
+            <column name="discipline_name" value="Artificial intelligence"/>
+        </insert>
+        <insert tableName="disciplines">
+            <column name="discipline_id" valueNumeric="4"/>
+            <column name="discipline_name" value="Computing systems and parallel data processing"/>
+        </insert>
+        <insert tableName="disciplines">
+            <column name="discipline_id" valueNumeric="5"/>
+            <column name="discipline_name" value="Data Mining"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="disciplines">
+                <where>discipline_id IN (1, 2, 3, 4, 5)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="insert-data-to-students" author="Ivan">
+        <insert tableName="students">
+            <column name="student_id" valueNumeric="1"/>
+            <column name="full_name" value="Ivanov Ivan Ivanovich"/>
+            <column name="phone" value="+79123456789"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="student_id" valueNumeric="2"/>
+            <column name="full_name" value="Pivovarov Alexey Alexandrovich"/>
+            <column name="phone" value="+79234567891"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="student_id" valueNumeric="3"/>
+            <column name="full_name" value="Krutoy Alexey Maksimovich"/>
+            <column name="phone" value="+79345678912"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="student_id" valueNumeric="4"/>
+            <column name="full_name" value="Zamaz Valeria Mikhailovna"/>
+            <column name="phone" value="+79456789123"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="student_id" valueNumeric="5"/>
+            <column name="full_name" value="Potapova Irina Dmitrevna"/>
+            <column name="phone" value="+79567891234"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="students">
+                <where>student_id IN (1, 2, 3, 4, 5)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert-data-to-schedule" author="Ivan">
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="1"/>
+            <column name="discipline_id" valueNumeric="2"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="day_week" valueNumeric="1"/>
+            <column name="start_time" value="8:00"/>
+            <column name="room" value="8-301"/>
+        </insert>
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="2"/>
+            <column name="discipline_id" valueNumeric="3"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="day_week" valueNumeric="3"/>
+            <column name="start_time" value="9:50"/>
+            <column name="room" value="7-512"/>
+        </insert>
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="3"/>
+            <column name="discipline_id" valueNumeric="1"/>
+            <column name="group_id" valueNumeric="2"/>
+            <column name="day_week" valueNumeric="2"/>
+            <column name="start_time" value="11:40"/>
+            <column name="room" value="8-708"/>
+        </insert>
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="4"/>
+            <column name="discipline_id" valueNumeric="4"/>
+            <column name="group_id" valueNumeric="2"/>
+            <column name="day_week" valueNumeric="4"/>
+            <column name="start_time" value="8:00"/>
+            <column name="room" value="7-205"/>
+        </insert>
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="5"/>
+            <column name="discipline_id" valueNumeric="5"/>
+            <column name="group_id" valueNumeric="3"/>
+            <column name="day_week" valueNumeric="5"/>
+            <column name="start_time" value="11:40"/>
+            <column name="room" value="7-508"/>
+        </insert>
+        <insert tableName="schedule">
+            <column name="schedule_id" valueNumeric="6"/>
+            <column name="discipline_id" valueNumeric="2"/>
+            <column name="group_id" valueNumeric="3"/>
+            <column name="day_week" valueNumeric="1"/>
+            <column name="start_time" value="13:45"/>
+            <column name="room" value="7-512"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="schedule">
+                <where>schedule_id IN (1, 2, 3, 4, 5, 6)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="reload-sequences" author="Ivan">
+        <sql>
+            SELECT setval('groups_group_id_seq', (SELECT MAX(group_id) FROM groups));
+            SELECT setval('disciplines_discipline_id_seq', (SELECT MAX(discipline_id) FROM disciplines));
+            SELECT setval('students_student_id_seq', (SELECT MAX(student_id) FROM students));
+            SELECT setval('schedule_schedule_id_seq', (SELECT MAX(schedule_id) FROM schedule));
+        </sql>
+        <rollback>
+            <sql>
+                SELECT setval('groups_group_id_seq', '1');
+                SELECT setval('disciplines_discipline_id_seq', '1');
+                SELECT setval('students_student_id_seq', '1');
+                SELECT setval('schedule_schedule_id_seq', '1');
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="tag-initial-data" author="Ivan">
+        <tagDatabase tag="initial-data"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,139 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+        <changeSet id="tag-empty-db" author="Ivan">
+            <tagDatabase tag="empty-db"/>
+        </changeSet>
+
+        <changeSet id="create-table-groups" author="Ivan">
+            <createTable tableName="groups">
+                <column name="group_id" type="int" autoIncrement="true">
+                    <constraints nullable="false" primaryKey="true"/>
+                </column>
+                <column name="group_name" type="varchar(20)">
+                    <constraints nullable="false" unique="true"/>
+                </column>
+            </createTable>
+            <rollback>
+                <dropTable tableName="groups"/>
+            </rollback>
+        </changeSet>
+    
+        <changeSet id="create-table-disciplines" author="Ivan">
+            <createTable tableName="disciplines">
+                <column name="discipline_id" type="int" autoIncrement="true">
+                    <constraints nullable="false" primaryKey="true"/>
+                </column>
+                <column name="discipline_name" type="varchar(70)">
+                    <constraints nullable="false" unique="true"/>
+                </column>
+            </createTable>
+            <rollback>
+                <dropTable tableName="disciplines"/>
+            </rollback>
+        </changeSet>
+
+        <changeSet id="create-table-students" author="Ivan">
+            <createTable tableName="students">
+                <column name="student_id" type="int" autoIncrement="true">
+                    <constraints nullable="false" primaryKey="true"/>
+                </column>
+                <column name="full_name" type="varchar(100)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="phone" type="varchar(20)">
+                    <constraints nullable="false" unique="true"/>
+                </column>
+                <column name="group_id" type="int">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <rollback>
+                <dropTable tableName="students"/>
+            </rollback>
+        </changeSet>
+
+    <changeSet id="create-fk-student-group-id" author="Ivan">
+        <addForeignKeyConstraint baseTableName="students"
+                                 baseColumnNames="group_id"
+                                 constraintName="fk_students_group_id"
+                                 referencedTableName="groups"
+                                 referencedColumnNames="group_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="students"
+                                      constraintName="fk_students_group_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-table-schedule" author="Ivan">
+        <createTable tableName="schedule">
+            <column name="schedule_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="discipline_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_week" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="time">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room" type="varchar(10)">
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="schedule"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-constraint-day-week-range" author="Ivan">
+        <sql>
+            ALTER TABLE schedule ADD CONSTRAINT check_day_week_range CHECK (day_week &gt;=1 AND day_week &lt;=7);
+        </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE schedule DROP CONSTRAINT IF EXISTS check_day_week_range;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-fk-schedule-discipline-id" author="Ivan">
+        <addForeignKeyConstraint baseTableName="schedule"
+                                 baseColumnNames="discipline_id"
+                                 constraintName="fk_schedule_discipline_id"
+                                 referencedTableName="disciplines"
+                                 referencedColumnNames="discipline_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="schedule"
+                                      constraintName="fk_schedule_discipline_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-fk-schedule-group-id" author="Ivan">
+        <addForeignKeyConstraint baseTableName="schedule"
+                                 baseColumnNames="group_id"
+                                 constraintName="fk_schedule_group_id"
+                                 referencedTableName="groups"
+                                 referencedColumnNames="group_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="schedule"
+                                      constraintName="fk_schedule_group_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="tag-created-schema" author="Ivan">
+        <tagDatabase tag="created-schema"/>
+    </changeSet>
+</databaseChangeLog>
